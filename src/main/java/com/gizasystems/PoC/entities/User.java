@@ -34,6 +34,9 @@ public class User implements UserDetails {
 
     private boolean premiumUser;
 
+    private int requestLimit;
+
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
