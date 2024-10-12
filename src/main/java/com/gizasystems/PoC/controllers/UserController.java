@@ -25,17 +25,15 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRegistrationDTO registrationDTO) {
-        try{
+        try {
             loggingService.logRequest("User registration attempt with username: " + registrationDTO.getUsername());
 
             User newUser = userService.registerNewUser(registrationDTO);
             return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-        }
-        catch (DuplicateKeyException e) {
+        } catch (DuplicateKeyException e) {
             loggingService.logAbnormalBehavior("User registration attempt with existing username: " + registrationDTO.getUsername());
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
-        }
-        catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (RuntimeException e) {
             loggingService.logAbnormalBehavior("User registration attempt with invalid data");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

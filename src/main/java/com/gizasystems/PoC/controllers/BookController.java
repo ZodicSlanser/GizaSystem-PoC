@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class BookController {
 
+    private final LoggingService loggingService;
     private UserRepository userRepository;
     private RateLimiterService rateLimiterService;
-    private final LoggingService loggingService;
 
     @GetMapping
     public ResponseEntity<String> getBooks() {

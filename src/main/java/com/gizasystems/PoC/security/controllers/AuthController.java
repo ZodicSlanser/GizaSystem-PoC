@@ -11,7 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,9 +38,9 @@ public class AuthController {
             String jwtToken = jwtUtil.generateToken(userDetails.getUsername());
 
 
-            return ResponseEntity.ok(new LoginResponse(jwtToken, userDetails.getUsername(), userDetails.getAuthorities().toString(),null));
+            return ResponseEntity.ok(new LoginResponse(jwtToken, userDetails.getUsername(), userDetails.getAuthorities().toString(), null));
         } catch (AuthenticationException e) {
-            return new ResponseEntity<LoginResponse>(new LoginResponse(null,null,null,"Invalid username or password"),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<LoginResponse>(new LoginResponse(null, null, null, "Invalid username or password"), HttpStatus.UNAUTHORIZED);
         }
     }
 }
