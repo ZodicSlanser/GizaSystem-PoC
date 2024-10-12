@@ -14,6 +14,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidRoles {
     String message() default "Invalid role(s) provided"; // Default error message
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
