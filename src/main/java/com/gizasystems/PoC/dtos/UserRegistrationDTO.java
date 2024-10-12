@@ -1,9 +1,10 @@
 package com.gizasystems.PoC.dtos;
 
-import com.gizasystems.PoC.entities.Role;
+import com.gizasystems.PoC.validation.ValidRoles;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Set;
 
@@ -13,5 +14,7 @@ import java.util.Set;
 public class UserRegistrationDTO {
     private String username;
     private String password;
-    private Set<Role> roles;
+
+    @ValidRoles
+    private Set<String> roles;
 }
