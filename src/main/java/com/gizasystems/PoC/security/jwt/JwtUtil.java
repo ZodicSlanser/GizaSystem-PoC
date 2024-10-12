@@ -13,7 +13,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "@@Zod1cSlanser1sBu1ld1ng4nArmy@@";
+    private final String SECRET_KEY = "f113afc46c55d502fd3470f932a4486880a86a23ee137d8021ab5f003b3a41736f4c586c6751ef3f981de28968ddf7bcd2e403d5366c2749ee4c91801827b9dad76d90ad0e3b40fb703bed2d034b06671df8f3f6e8ae5f5b2d3e271a1df80e9604a54907c9aa73a92416840a351fa0bf1674f66922050e2b5a717a72831d49bd8571bcc6e6e715f8a6f4056d2df3ead8f3fa18b44ab2b5d174954ec0d3301f31b0d80bdb91b233ea7183de4aef93747a710c50366fb83ff8efcd0078eb8d08f681a6a09aba3319b8a22a7819ca026c5ceb31faecd4ace7e74452c265fe8d525e846cde4fc5e8375d55c2efde572847dd1c9de67d603845efb71a80a24ef4954e";
     private final long EXPIRATION_TIME = 1000 * 60 * 60;
 
     public String generateToken(String username) {
@@ -45,8 +45,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-    }
+        return Jwts.parser().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();    }
 
     public Date extractExpiration(String token) {
         return extractAllClaims(token).getExpiration();

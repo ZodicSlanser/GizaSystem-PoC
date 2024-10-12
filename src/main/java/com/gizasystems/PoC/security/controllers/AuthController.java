@@ -29,6 +29,7 @@ public class AuthController {
             );
 
             final UserDetails userDetails = userDetailsService.loadUserByUsername(loginUser.getUsername());
+            System.out.println("userDetails: " + userDetails);
             String jwtToken = jwtUtil.generateToken(userDetails.getUsername());
 
             return ResponseEntity.ok(jwtToken);
