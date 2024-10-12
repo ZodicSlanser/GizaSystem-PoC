@@ -4,7 +4,7 @@ import com.gizasystems.PoC.dtos.UserRegistrationDTO;
 import com.gizasystems.PoC.entities.Role;
 import com.gizasystems.PoC.entities.User;
 import com.gizasystems.PoC.repositories.UserRepository;
-import com.gizasystems.PoC.validation.ValidRoles;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class UserService {
     public User registerNewUser(UserRegistrationDTO registrationDTO) {
         Optional<User> existingUser = userRepository.findByUsername(registrationDTO.getUsername());
         if (existingUser.isPresent()) {
-            throw new RuntimeException("User already exists!");
+            throw new DuplicateKeyException("User already exists!");
         }
 
         User newUser = new User();
