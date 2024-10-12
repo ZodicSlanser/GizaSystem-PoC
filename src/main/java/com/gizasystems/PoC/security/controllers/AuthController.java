@@ -1,5 +1,6 @@
 package com.gizasystems.PoC.security.controllers;
 
+import com.gizasystems.PoC.dtos.LoginResponse;
 import com.gizasystems.PoC.entities.User;
 import com.gizasystems.PoC.security.jwt.JwtUtil;
 import lombok.AllArgsConstructor;
@@ -22,19 +23,21 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User loginUser) {
+    public ResponseEntity<LoginResponse> login(@RequestBody User loginUser) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword())
             );
+            System.out.println("loginUser: " + loginUser);
 
             final UserDetails userDetails = userDetailsService.loadUserByUsername(loginUser.getUsername());
             System.out.println("userDetails: " + userDetails);
             String jwtToken = jwtUtil.generateToken(userDetails.getUsername());
 
-            return ResponseEntity.ok(jwtToken);
+
+            return ResponseEntity.ok(new LoginResponse(jwtToken, userDetails.getUsername(), userDetails.getAuthorities().toString(),null));
         } catch (AuthenticationException e) {
-            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<LoginResponse>(new LoginResponse(null,null,null,"Invalid username or password"),HttpStatus.UNAUTHORIZED);
         }
     }
 }

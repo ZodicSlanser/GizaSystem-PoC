@@ -31,8 +31,8 @@ public class UserService {
         newUser.setUsername(registrationDTO.getUsername());
         newUser.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
         newUser.setRoles(registrationDTO.getRoles());
-        newUser.setPremiumUser(registrationDTO.getRoles().contains(Role.ROLE_PREMIUM_USER));
-
+        newUser.setPremiumUser(registrationDTO.getRoles().contains(Role.ROLE_PREMIUM_USER.toString()));
+        newUser.setRequestLimit(newUser.isPremiumUser() ? 15 : newUser.getRoles().contains(Role.ROLE_ADMIN.toString()) ? 1000 : 5);
         return userRepository.save(newUser);
     }
 }
